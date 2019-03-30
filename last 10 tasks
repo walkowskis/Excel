@@ -1,0 +1,25 @@
+import openpyxl
+
+
+path = '...'
+wb = openpyxl.load_workbook(path)
+sheet = wb.active
+
+max = sheet.max_row
+x = 0
+no = 0
+for row in sheet.iter_rows(min_row=(max-9), min_col=1, max_row=max, max_col=5):
+    no += 1
+    print("\nWpis nr:", no)
+    for cell in row:
+        x += 1
+        if cell.value is None:
+            i = 9 - no
+            while sheet.cell(row=(max-i), column=x).value is None:
+                i += 1
+            print(sheet.cell(row=2, column=x).value, sheet.cell(
+                row=(max-i), column=x).value, end=" | ")
+        else:
+            print(sheet.cell(row=2, column=x).value, cell.value, end=" | ")
+    x = 0
+    print()
